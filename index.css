@@ -1,0 +1,23 @@
+.tree {
+  list-style-type: none;
+}
+
+.tree__branch::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.tree__branch--expanded::before {
+  transform: rotate(90deg);
+}
+
+.collapsed {
+  display: none;
+}
+
+.expanded {
+  display: block;
+}
