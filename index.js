@@ -103,7 +103,7 @@ const toggleChildSelection = (node, checked) => {
 }
 
 const toggleParentSelection = (node, checked) => {
-  const parent = treeNodes.find(({id}) => id === node.parent);
+  const parent = treeNodes.find(({id}) => id == node.parent);
 
   if(!parent) {
     return;
@@ -117,7 +117,7 @@ const toggleParentSelection = (node, checked) => {
   const checkbox = document.getElementById(parent.id);
   checkbox.checked = checked;
 
-  toggleParentSelection(parent);
+  toggleParentSelection(parent, checked);
 }
 
 const hierarchyTree = buildHierarchyTree(treeNodes);
