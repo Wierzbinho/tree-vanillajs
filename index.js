@@ -55,7 +55,7 @@ const drawTree = (hierarchyTreeNode, parent) => {
   parent.appendChild(domTreeNode);
 
   if (hierarchyTreeNode.children.length) {
-    domTreeNode.className = 'tree__branch';
+    domTreeNode.className = 'tree__branch tree__branch--collapsed';
     domTreeNode.addEventListener("click", (evt) => {
       evt.stopPropagation();
       if (!evt.target.children.length) {
@@ -63,6 +63,7 @@ const drawTree = (hierarchyTreeNode, parent) => {
       }
 
       evt.target.classList.toggle('tree__branch--expanded');
+      evt.target.classList.toggle('tree__branch--collapsed');
 
       const ul = evt.target.children[1];
       if (!ul) {

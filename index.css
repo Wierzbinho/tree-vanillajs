@@ -6,12 +6,15 @@
   content: "\25B6";
   color: black;
   display: inline-block;
-  margin-right: 6px;
 }
 
 /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
 .tree__branch--expanded::before {
-  transform: rotate(90deg);
+  transform: scale(0.7) rotate(90deg);
+}
+
+.tree__branch--collapsed::before {
+  transform: scale(0.7);
 }
 
 .collapsed {
