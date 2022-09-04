@@ -1,3 +1,17 @@
+import { createServer } from "miragejs"
+
+export const startMockServer = () => {
+  createServer({
+    routes() {
+      this.namespace = "api";
+
+      this.get("/components", () => {
+        return components;
+      });
+    },
+  });
+};
+
 const components = [
   { id: 2, name: "/DP300-STRU-AKO", parent: 1 },
   {
@@ -73,7 +87,3 @@ const components = [
   { id: 24, name: "/DP300-STRU-AKO/BHD/LOWER_DK_T500", parent: 4 },
   { id: 25, name: "/DP300-STRU-AKO/DST/LOWER_DK", parent: 9 },
 ];
-
-export const getComponents = () => {
-  return components;
-}

@@ -1,0 +1,12 @@
+{
+  "name": "tree-vanillajs",
+  "source": "src/index.html",
+  "packageManager": "yarn@3.2.3",
+  "scripts": {
+    "start": "parcel"
+  },
+  "devDependencies": {
+    "miragejs": "^0.1.45",
+    "parcel": "^2.7.0"
+  }
+}

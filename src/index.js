@@ -1,6 +1,6 @@
-import { getComponents } from "./mockServer.js";
+import { startMockServer } from "./mockServer.js";
 
-const treeNodes = getComponents();
+startMockServer();
 
 const buildHierarchyTree = (treeNodes) => {
   let hierarchyTree;
@@ -28,13 +28,13 @@ const buildHierarchyTree = (treeNodes) => {
   return hierarchyTree;
 }
 
-const drawTree = (hierarchyTreeNode, parent) => {
+const drawTree = (treeNodes, hierarchyTreeNode, parent) => {
   const domTreeNode = document.createElement('li');
   const checkbox = document.createElement('input');
   checkbox.type = "checkbox";
   checkbox.id = hierarchyTreeNode.id;
   checkbox.addEventListener("click", (evt) => {
-    toggleSelection(evt.target);
+    toggleSelection(treeNodes, evt.target);
   });
   domTreeNode.appendChild(checkbox);
   domTreeNode.appendChild(document.createTextNode(hierarchyTreeNode.name));
@@ -64,19 +64,19 @@ const drawTree = (hierarchyTreeNode, parent) => {
     domTreeNode.appendChild(nestedTree);
     
     for (const childNode of hierarchyTreeNode.children) {
-      drawTree(childNode, nestedTree);
+      drawTree(treeNodes, childNode, nestedTree);
     }
   } else {
     domTreeNode.className = 'tree__leaf'
   }
 }
 
-const toggleSelection = (checkbox) => {
+const toggleSelection = (treeNodes, checkbox) => {
   const node = treeNodes.find(({id}) => id == checkbox.id);
   node.checked = checkbox.checked;
   
   toggleChildSelection(node, checkbox.checked);
-  toggleParentSelection(node, checkbox.checked);
+  toggleParentSelection(treeNodes, node, checkbox.checked);
 }
 
 const toggleChildSelection = (node, checked) => {
@@ -89,7 +89,7 @@ const toggleChildSelection = (node, checked) => {
   })
 }
 
-const toggleParentSelection = (node, checked) => {
+const toggleParentSelection = (treeNodes, node, checked) => {
   const parent = treeNodes.find(({id}) => id == node.parent);
 
   if(!parent) {
@@ -104,11 +104,19 @@ const toggleParentSelection = (node, checked) => {
   const checkbox = document.getElementById(parent.id);
   checkbox.checked = checked;
 
-  toggleParentSelection(parent, checked);
+  toggleParentSelection(treeNodes, parent, checked);
 }
 
-const hierarchyTree = buildHierarchyTree(treeNodes);
+const getComponents = async () => {
+  const response = await fetch('api/components');
+  return await response.json();
+}
 
-const tree = document.getElementsByClassName('tree')[0];
+(async () => {
+  const components = await getComponents();
+  const componentTree = buildHierarchyTree(components);
+  const mainTree = document.getElementsByClassName('tree')[0];
+  drawTree(components, componentTree, mainTree);
+})();
 
-drawTree(hierarchyTree, tree);
+
