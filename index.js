@@ -1,20 +1,6 @@
-const treeNodes = [
-  { id: 1 },
-  { id: 2, parent: 1 },
-  { id: 3, parent: 2 },
-  { id: 4, parent: 3 },
-  { id: 5, parent: 3 },
-  { id: 6, parent: 3 },
-  { id: 7, parent: 6 },
-  { id: 8, parent: 6 },
-  { id: 9, parent: 6 },
-  { id: 10, parent: 2 },
-  { id: 11, parent: 10 },
-  { id: 12, parent: 10 },
-  { id: 13, parent: 12 },
-  { id: 14, parent: 12 },
-];
+import { getComponents } from "./mockServer.js";
 
+const treeNodes = getComponents();
 
 const buildHierarchyTree = (treeNodes) => {
   let hierarchyTree;
@@ -51,7 +37,7 @@ const drawTree = (hierarchyTreeNode, parent) => {
     toggleSelection(evt.target);
   });
   domTreeNode.appendChild(checkbox);
-  domTreeNode.appendChild(document.createTextNode(hierarchyTreeNode.id));
+  domTreeNode.appendChild(document.createTextNode(hierarchyTreeNode.name));
   parent.appendChild(domTreeNode);
 
   if (hierarchyTreeNode.children.length) {
